@@ -13,6 +13,8 @@ const paymentRouter = require("./routers/paymentRouter");
 const port = process.env.PORT || 3002; // uses the port provided by the process.env & defaults to 3002 if none is provided
 const server = express();
 
+let allowedOrigins = ["http://localhost:3000", "http://yourapp.com"];
+
 // configuring the database
 mongoose.Promise = global.Promise; // mongoose's promise library is deprecated, so we sub in the general ES6 promises here
 const databaseOptions = {
@@ -30,7 +32,22 @@ mongoose.connection
 
 // setting up middleware
 server.use(express.json());
-server.use(cors());
+server.use(
+  cors({
+    origin: function(origin, callback) {
+      // allow requests with no origin
+      // (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not " +
+          "allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    }
+  })
+);
 
 // test route
 server.get("/", (req, res) => res.send(`The server is up and running!`));
