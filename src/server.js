@@ -24,7 +24,6 @@ const databaseOptions = {
 mongoose.set("useCreateIndex", true); // collection.ensureIndex is also deprecated so we use 'useCreateIndex' instead
 
 // connecting to the database
-console.log(process.env.MONGODB_URI);
 mongoose.connect(process.env.MONGODB_URI, databaseOptions);
 mongoose.connection
   .once("open", () => console.log(`The database is connected`))
@@ -32,22 +31,7 @@ mongoose.connection
 
 // setting up middleware
 server.use(express.json());
-server.use(
-  cors({
-    origin: function(origin, callback) {
-      // allow requests with no origin
-      // (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not " +
-          "allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    }
-  })
-);
+server.use(cors({ origin: "http://localhost:3000/" }));
 
 // test route
 server.get("/", (req, res) => res.send(`The server is up and running!`));
