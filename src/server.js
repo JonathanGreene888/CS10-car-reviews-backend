@@ -31,7 +31,7 @@ mongoose.connection
 
 // setting up middleware
 server.use(express.json());
-server.use(cors({ origin: "http://localhost:3000/" }));
+server.use(cors({ origin: "http://localhost:3000" }));
 
 // test route
 server.get("/", (req, res) => res.send(`The server is up and running!`));
