@@ -34,10 +34,8 @@ mongoose.connection
 server.use(express.json());
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS,PUT,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Accept,jwt");
   next();
 });
 
