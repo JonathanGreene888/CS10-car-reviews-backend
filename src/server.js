@@ -1,7 +1,7 @@
 // importing dependencies
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+// const cors = require("cors");
 require("dotenv").config();
 
 // importing routers
@@ -12,8 +12,6 @@ const paymentRouter = require("./routers/paymentRouter");
 // setting up the server
 const port = process.env.PORT || 3002; // uses the port provided by the process.env & defaults to 3002 if none is provided
 const server = express();
-
-let allowedOrigins = ["http://localhost:3000", "http://yourapp.com"];
 
 // configuring the database
 mongoose.Promise = global.Promise; // mongoose's promise library is deprecated, so we sub in the general ES6 promises here
@@ -36,6 +34,7 @@ server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS,PUT,DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Accept,jwt");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
 
