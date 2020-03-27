@@ -31,10 +31,7 @@ mongoose.connection
 // setting up middleware
 server.use(express.json());
 server.use(function(req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://autoreviewforyou.herokuapp.com"
-  );
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS,PUT,DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Accept,jwt");
   res.setHeader("Access-Control-Allow-Credentials", "true");
