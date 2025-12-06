@@ -1,6 +1,7 @@
 // importing dependencies
 const express = require("express");
 const mongoose = require("mongoose");
+
 // const cors = require("cors");
 require("dotenv").config();
 
@@ -15,15 +16,10 @@ const server = express();
 
 // configuring the database
 mongoose.Promise = global.Promise; // mongoose's promise library is deprecated, so we sub in the general ES6 promises here
-const databaseOptions = {
-  useNewUrlParser: true, // mongoose's URL parser is also deprecated, so we pass this in as a option to use the new one
-  useUnifiedTopology: true
-};
-mongoose.set("useCreateIndex", true); // collection.ensureIndex is also deprecated so we use 'useCreateIndex' instead
 
 // connecting to the database
 console.log(process.env.MONGODB_URI);
-mongoose.connect(process.env.MONGODB_URI, databaseOptions);
+mongoose.connect(process.env.MONGODB_URI || "Not  working" );
 mongoose.connection
   .once("open", () => console.log(`The database is connected`))
   .on("error", err => console.warn("error is : ", err));
